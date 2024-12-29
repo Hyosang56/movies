@@ -2,14 +2,12 @@ package com.example.movies.domain.movie.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name="movie")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,27 +18,28 @@ public class MovieEntity {
     @Column(name = "idx", nullable = false, unique = true)
     private Long idx;
 
-    @Column(name = "movie_name" ,nullable = false)
+    @Column(name = "movie_name", nullable = false)
     private String movieName;
 
-    @Column(name = "poster" ,nullable = false)
+    @Column(name = "poster", nullable = false)
     private String poster;
 
-    @Column(name = "movie_date" ,nullable = false)
+    @Column(name = "movie_date", nullable = false)
     private String movieDate;
 
-    @Column(name = "country" ,nullable = false)
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "grade" )
+    @Column(name = "grade")
     private String grade;
 
     @Column(name = "movie_time")
     private Integer movieTime;
 
-    @Column(name = "summary" ,nullable = false)
+    @Column(name = "summary", nullable = false)
     private String summary;
 
     @Column(name = "movie_url")
     private String movieUrl;
 }
+

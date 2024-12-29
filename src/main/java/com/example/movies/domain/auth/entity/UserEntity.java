@@ -23,16 +23,14 @@ public class UserEntity {
     private String nickname;
     private String password;
     private LocalDate birth;
-    private String role;
 
     //Builder 패턴 활성화
     @Builder
-    public UserEntity(String id, String nickname, String password, LocalDate birth, String role) {
+    public UserEntity(String id, String nickname, String password, LocalDate birth) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
         this.birth = birth;
-        this.role = role;
 
     }
 }

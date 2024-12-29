@@ -2,7 +2,11 @@ package com.example.movies.domain.auth.service;
 
 import com.example.movies.domain.auth.dto.ReqJoinDTO;
 import com.example.movies.domain.auth.dto.ReqLoginDTO;
+import com.example.movies.domain.auth.entity.GenreEntity;
 import com.example.movies.domain.auth.entity.UserEntity;
+import com.example.movies.domain.auth.entity.UserGenreEntity;
+import com.example.movies.domain.auth.repository.GenreRepository;
+import com.example.movies.domain.auth.repository.UserGenreRepository;
 import com.example.movies.domain.auth.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +23,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class AuthServiceApiV1 {
     private final UserRepository userRepository;
+    private final GenreRepository genreRepository;
+    private final UserGenreRepository userGenreRepository;
 
     @Transactional
     public ResponseEntity<?> join(ReqJoinDTO dto) {
@@ -25,13 +32,12 @@ public class AuthServiceApiV1 {
         // 회원가입 정보 입력했는지 확인
         if (
                 dto.getUser().getId() == null ||
-                        dto.getUser().getId().equals("") ||
+                        dto.getUser().getId().trim().isEmpty() ||
                         dto.getUser().getNickname() == null ||
-                        dto.getUser().getNickname().equals("") ||
+                        dto.getUser().getNickname().trim().isEmpty() ||
                         dto.getUser().getPassword() == null ||
-                        dto.getUser().getPassword().equals("") ||
-                        dto.getUser().getBirth() == null ||
-                        dto.getUser().getBirth().equals("")
+                        dto.getUser().getPassword().trim().isEmpty() ||
+                        dto.getUser().getBirth() == null
 
         ) {
             return new ResponseEntity<>(
@@ -66,10 +72,36 @@ public class AuthServiceApiV1 {
                 .nickname(dto.getUser().getNickname())
                 .password(dto.getUser().getPassword())
                 .birth(dto.getUser().getBirth())
-                .role("USER")
                 .build();
 
         userRepository.save(userEntity);
+
+        // 장르 매핑 처리
+        List<Long> genreIdxList = dto.getGenreIdxList();
+        if (genreIdxList == null || genreIdxList.size() != 3) {
+            return new ResponseEntity<>(
+                    "선호 장르는 3개를 선택해야 합니다.",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        for (Long genreIdx : genreIdxList) {
+            Optional<GenreEntity> genreEntityOptional = genreRepository.findById(genreIdx);
+            if (!genreEntityOptional.isPresent()) {
+                return new ResponseEntity<>(
+                        "존재하지 않는 장르입니다.",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+            GenreEntity genreEntity = genreEntityOptional.get();
+
+            UserGenreEntity userGenreEntity = UserGenreEntity.builder()
+                    .user(userEntity)
+                    .genre(genreEntity)
+                    .build();
+
+            userGenreRepository.save(userGenreEntity);
+        }
 
         return new ResponseEntity<>(
                 "회원가입에 성공하였습니다.",
@@ -82,9 +114,9 @@ public class AuthServiceApiV1 {
 
         // 아이디 , 비밀번호 입력했는지 확인.
         if (dto.getUser().getId() == null ||
-                dto.getUser().getId().equals("") ||
+                dto.getUser().getId().trim().isEmpty() ||
                 dto.getUser().getPassword() == null ||
-                dto.getUser().getPassword().equals("")) {
+                dto.getUser().getPassword().trim().isEmpty()) {
             return new ResponseEntity<>(
                     "아이디와 비밀번호를 입력해주세요",
                     HttpStatus.BAD_REQUEST);

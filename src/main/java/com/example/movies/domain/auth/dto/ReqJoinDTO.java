@@ -14,8 +14,6 @@ import java.util.List;
 @Getter
 public class ReqJoinDTO {
     private User user;
-    // private Genre genre;
-    // pirvate UserGenre userGenre;
     private List<Long> genreIdxList;
 
     @NoArgsConstructor
@@ -23,12 +21,10 @@ public class ReqJoinDTO {
     @Builder
     @Getter
     public static class User {
-        // private Long idx;
         private String id;
         private String nickname;
         private String password;
         private LocalDate birth;
-        private String role;
 
     }
 
@@ -38,7 +34,6 @@ public class ReqJoinDTO {
     @Getter
     public static class Genre {
         private Long idx;
-        //private String genreName;
     }
 
 }

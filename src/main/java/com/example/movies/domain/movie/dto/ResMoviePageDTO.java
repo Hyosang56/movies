@@ -15,14 +15,11 @@ import java.util.List;
 public class ResMoviePageDTO {
     private List<Movie> movieList;
 
-
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     @Builder
     public static class Movie {
-
-
 
         private Long idx;
         private String movieName;
@@ -35,6 +32,7 @@ public class ResMoviePageDTO {
         private String movieUrl;
 
         public static Movie fromEntity(MovieEntity movieEntity){
+
             return Movie.builder()
                     .movieName(movieEntity.getMovieName())
                     .poster(movieEntity.getPoster())

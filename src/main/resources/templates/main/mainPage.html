@@ -1,32 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style></style>
-    <title>main</title>
-    <link
-        rel="stylesheet" hred="/css/main/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 */
+            gap: 20px; /* 포스터 간격 */
+            margin-top: 20px;
+        }
+
+        .movie-item {
+            position: relative;
+            text-align: center;
+        }
+
+        .movie-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* 포스터의 왼쪽 아래에 순위 표시 */
+        .rank {
+            position: absolute;
+            bottom: 50px; /* 포스터 하단에서 10px 위로 */
+            left: 10px; /* 포스터 좌측에서 10px 우측으로 */
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 30px !important;
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .movie-item span {
+            margin-top: 10px;
+            display: block;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header" style="display: flex; flex-direction: row">
-            <div class="logo"> <img style="width: 350px;" src="/img/movies_logo.png" alt="로고"></div>
-            <div class="loginjoin">
-                <span>로그인</span>
-                <span style="margin-left: 20px;">회원가입</span>
-                <span>영화순위</span>
-                <ul class="movieRankList" >
-                    <li class="movieRank" th:each="dto : ${dto.movieRankAndTitleList}"  >
-                        <span th:text="${dto.rank}"></span>
-                        <span th:text="${dto.movieName}"></span>
-                        <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.posterPath}}" alt="Poster" width="200" height="300">
-                    </li>
+<!-- 헤더 포함 -->
+<!-- ~{main/header}는 resources/templates/main/header.html을 참조하는 경로입니다. -->
+<div th:replace="~{main/header}"></div>
 
-                </ul>
-            </div>
+<div class="container">
+    <h1>현재 박스오피스 순위</h1>
+    <div class="movie-grid">
+        <div class="movie-item" th:each="dto : ${dto.movieRankAndTitleList}">
+            <span class="rank" th:text="${dto.rank}"></span>
+            <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.posterPath}}" alt="Poster">
+            <span th:text="${dto.movieName}"></span>
         </div>
-        <div>d</div>
     </div>
+</div>
 </body>
 </html>

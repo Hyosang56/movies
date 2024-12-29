@@ -6,10 +6,7 @@ import com.example.movies.domain.auth.service.AuthServiceApiV1;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +22,26 @@ public class AuthControllerApiV1 {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody ReqLoginDTO dto, HttpSession session) {
-        return authServiceApiV1.login(dto, session);
+        ResponseEntity<?> responseEntity = authServiceApiV1.login(dto, session);
 
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            // 세션에 user 속성을 설정
+            session.setAttribute("user", true);
+        }
+
+        return responseEntity;
+
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<Boolean> checkLoginStatus(HttpSession session) {
+        boolean isLoggedIn = session.getAttribute("user") != null;
+        return ResponseEntity.ok(isLoggedIn);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return ResponseEntity.ok("로그아웃되었습니다.");
     }
 }
