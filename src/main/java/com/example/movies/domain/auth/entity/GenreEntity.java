@@ -6,16 +6,11 @@ import lombok.*;
 @Entity
 @Table(name="`genre`")
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "idx", callSuper = false) // equals 로 객체 비교할때 idx로만 비교한다는 뜻.
 public class GenreEntity {
     @Id
+    private Long idx; // 장르의 고유 ID (자동 증가하지 않음, 고정 값)
 
-    @Column(name = "idx",nullable = false, unique = true)
-    private Long idx;
-
-    @Column(name = "genre_name", nullable = false, unique = true)
-    private String genreName;
+    @Column(name = "genre_name", nullable = false)
+    private String genreName; // 장르 이름
 }

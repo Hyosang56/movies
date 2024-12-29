@@ -1,56 +1,31 @@
 package com.example.movies.domain.movie.service;
 
-import com.example.movies.domain.movie.MovieNotFoundException;
-import com.example.movies.domain.movie.dto.ResMoviePageDTO;
-import com.example.movies.domain.movie.dto.ResMoviePageDTO.Movie;
-import com.example.movies.domain.movie.entity.MovieEntity;
+import com.example.movies.domain.auth.repository.UserGenreRepository;
+import com.example.movies.domain.movie.dto.MovieDTO;
 import com.example.movies.domain.movie.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MovieService {
 
-    @Autowired
-    private MovieRepository movieRepository;
+    private final UserGenreRepository userGenreRepository;
+    private final MovieRepository movieRepository;
 
-    // 영화 정보 가져와서 ResMoviePageDTO 생성해서 반환.
-    public ResMoviePageDTO getResMoviePageDTO() {
+    public List<MovieDTO> getRecommendedMovies(Long userId) {
+        // 사용자의 선호 장르를 가져오기
+        List<Long> genreIds = userGenreRepository.findGenreIdsByUserId(userId);
 
-        // 모든 영화 정보 조회
-        List<MovieEntity> movieEntityList = movieRepository.findAll();
+        // 선호 장르에 해당하는 영화 리스트 반환
+        List<MovieDTO> allMovies = movieRepository.findMoviesByGenreIds(genreIds);
 
-        // ResMoviePageDTO 객체를 빌더 패턴 사용해서 생성
-        // movieEntityList 이용해서 영화 엔티티 Movie 객체로 변환.
-        // movieList 에 담아서 ResMoviePageDTO 객체 생성
-        return ResMoviePageDTO.builder()
-                .movieList(
-                        movieEntityList.stream()
-                                .map(movieEntity -> Movie.fromEntity(movieEntity))
-                                .toList())
-                .build();
-    }
-
-    // 특정 영화의 상세 정보 가져오기
-    public ResMoviePageDTO.Movie getMovieDetails(Long movieIdx) {
-        Optional<MovieEntity> optionalmovieEntity = movieRepository.findById(movieIdx);
-
-        if (optionalmovieEntity.isPresent()) {
-            MovieEntity movieEntity = optionalmovieEntity.get();
-            return ResMoviePageDTO.Movie.builder()
-                    .movieName(movieEntity.getMovieName())
-                    .country(movieEntity.getCountry())
-                    .movieDate(movieEntity.getMovieDate())
-                    .grade(movieEntity.getGrade())
-                    .summary(movieEntity.getSummary())
-                    .poster(movieEntity.getPoster())
-                    .build();
-        } else {
-            // 영화가 존재하지 않을 경우 예외를 던집니다.
-            throw new MovieNotFoundException("Movie with id " + movieIdx + " not found");
-        }
+        // 중복 영화 제거 (영화 ID 기준으로 필터링)
+        return allMovies.stream()
+                .distinct() // 중복 제거
+                .collect(Collectors.toList());
     }
 }

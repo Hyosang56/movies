@@ -69,20 +69,6 @@
             background-color: darkred;
         }
 
-        #error-message {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-            text-align: left;
-        }
-
-        #success-message {
-            color: #00cc00;
-            font-size: 12px;
-            margin-top: 5px;
-            text-align: left;
-        }
-
         #genreButton {
             margin: 10px 0;
             width: calc(100% - 20px);
@@ -134,8 +120,25 @@
             color: white;
         }
 
-        .modal-content label {
-            margin-right: 10px;
+        .genre-grid {
+            display: flex; /* Flexbox 레이아웃 사용 */
+            flex-wrap: wrap; /* 아이템이 넘칠 경우 다음 줄로 이동 */
+            gap: 10px; /* 아이템 간 간격 설정 */
+            justify-content: center; /* 아이템을 가로로 중앙 정렬 */
+            margin-bottom: 20px;
+        }
+
+        .genre-option {
+            display: flex;
+            align-items: center;
+            width: calc(33.333% - 10px); /* 한 줄에 세 개의 장르 표시 */
+            box-sizing: border-box; /* 패딩과 보더 포함하여 너비 계산 */
+        }
+
+        .genre-option label {
+            margin-left: 5px;
+            font-size: 14px;
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
         }
 
         #submitGenres {
@@ -145,11 +148,13 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px;
         }
 
         #submitGenres:hover {
             background-color: darkred;
         }
+
 
     </style>
     <title>Join</title>
@@ -176,69 +181,115 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h3>선호 장르 3개 선택</h3>
+        <div class="genre-grid">
+            <div class="genre-option">
+                <label for="action">액션</label>
+                <input type="checkbox" id="action" value="28">
+            </div>
+            <div class="genre-option">
+                <label for="fear">공포</label>
+                <input type="checkbox" id="fear" value="27">
+            </div>
+            <div class="genre-option">
+                <label for="comedy">코미디</label>
+                <input type="checkbox" id="comedy" value="35">
+            </div>
+            <div class="genre-option">
+                <label for="adventure">모험</label>
+                <input type="checkbox" id="adventure" value="12">
+            </div>
+            <div class="genre-option">
+                <label for="sf">SF</label>
+                <input type="checkbox" id="sf" value="878">
+            </div>
+            <div class="genre-option">
+                <label for="drama">드라마</label>
+                <input type="checkbox" id="drama" value="18">
+            </div>
+            <div class="genre-option">
+                <label for="history">역사</label>
+                <input type="checkbox" id="history" value="36">
+            </div>
+            <div class="genre-option">
+                <label for="music">음악</label>
+                <input type="checkbox" id="music" value="10402">
+            </div>
+            <div class="genre-option">
+                <label for="fantasy">판타지</label>
+                <input type="checkbox" id="fantasy" value="14">
+            </div>
+            <div class="genre-option">
+                <label for="crime">범죄</label>
+                <input type="checkbox" id="crime" value="80">
+            </div>
+            <div class="genre-option">
+                <label for="thewest">서부</label>
+                <input type="checkbox" id="thewest" value="37">
+            </div>
+            <div class="genre-option">
+                <label for="romance">로맨스</label>
+                <input type="checkbox" id="romance" value="10749">
+            </div>
 
-        <input type="checkbox" id="action" value="28">
-        <label for="action">액션</label>
 
-        <input type="checkbox" id="comedy" value="35">
-        <label for="comedy">코미디</label>
+            <div class="genre-option">
+                <label for="family">가족</label>
+                <input type="checkbox" id="family" value="10751">
+            </div>
 
-        <input type="checkbox" id="romance" value="10749">
-        <label for="romance">로맨스</label>
+            <div class="genre-option">
+                <label for="war">전쟁</label>
+                <input type="checkbox" id="war" value="10752">
+            </div>
+            <div class="genre-option">
+                <label for="documentary">다큐멘터리</label>
+                <input type="checkbox" id="documentary" value="99">
+            </div>
+            <div class="genre-option">
+                <label for="thriller">스릴러</label>
+                <input type="checkbox" id="thriller" value="53">
+            </div>
 
-        <input type="checkbox" id="drama" value="18">
-        <label for="drama">드라마</label>
+            <div class="genre-option">
+                <label for="mystery">미스터리</label>
+                <input type="checkbox" id="mystery" value="9648">
+            </div>
 
-        <input type="checkbox" id="animation" value="16">
-        <label for="animation">애니메이션</label>
+            <div class="genre-option">
+                <label for="animation">애니메이션</label>
+                <input type="checkbox" id="animation" value="16">
+            </div>
 
-        <input type="checkbox" id="fantasy" value="14">
-        <label for="fantasy">판타지</label>
-        <!--
-        <input type="checkbox" id="sf" value="878">
-        <label for="sf">SF</label>
+            <div class="genre-option">
+                <label for="tv">TV 영화</label>
+                <input type="checkbox" id="tv" value="10770">
+            </div>
 
-        <input type="checkbox" id="tv" value="10770">
-        <label for="tv">TV 영화</label>
 
-        <input type="checkbox" id="family" value="10751">
-        <label for="family">가족</label>
-
-        <input type="checkbox" id="fear" value="27">
-        <label for="fear">공포</label>
-
-        <input type="checkbox" id="documentary" value="99">
-        <label for="documentary">다큐멘터리</label>
-
-        <input type="checkbox" id="adventure" value="12">
-        <label for="adventure">모험</label>
-
-        <input type="checkbox" id="mystery" value="9648">
-        <label for="mystery">미스터리</label>
-
-        <input type="checkbox" id="crime" value="80">
-        <label for="crime">범죄</label>
-
-        <input type="checkbox" id="thewest" value="37">
-        <label for="thewest">서부</label>
-
-        <input type="checkbox" id="thriller" value="53">
-        <label for="thriller">스릴러</label>
-
-        <input type="checkbox" id="history" value="36">
-        <label for="history">역사</label>
-
-        <input type="checkbox" id="music" value="10402">
-        <label for="music">음악</label>
-
-        <input type="checkbox" id="war" value="10752">
-        <label for="war">전쟁</label>
-        -->
+        </div>
         <button id="submitGenres">선택 완료</button>
     </div>
 </div>
 
 <script>
+
+    // 장르 선택 버튼 클릭 시 모달 표시
+    document.getElementById("genreButton").addEventListener("click", () => {
+        document.getElementById("genreModal").style.display = "block";
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 숨김
+    document.querySelector(".close").addEventListener("click", () => {
+        document.getElementById("genreModal").style.display = "none";
+    });
+
+    // 모달 외부 클릭 시 모달 숨김
+    window.addEventListener("click", (event) => {
+        if (event.target == document.getElementById("genreModal")) {
+            document.getElementById("genreModal").style.display = "none";
+        }
+    });
+
     // 비밀번호 확인 함수
     const passwordChecking = () => {
         const password = document.getElementById("password").value;
@@ -279,7 +330,7 @@
 
     submitGenres.addEventListener("click", () => {
         const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
-        selectedGenres = Array.from(checkboxes).map(checkbox => parseLong(checkbox.value));
+        selectedGenres = Array.from(checkboxes).map(checkbox => parseInt(checkbox.value, 10));
 
         if (selectedGenres.length !== 3) { // 정확히 3개 선택
             alert("장르는 정확히 3개를 선택해야 합니다.");
@@ -290,11 +341,6 @@
         genreModal.style.display = "none";
     });
 
-    const parseLong = (value) => {
-        const parsed = parseInt(value, 10);
-        return isNaN(parsed) ? null : parsed;
-    };
-
     // 회원가입 함수
     const requestJoin = (event) => {
         event.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
@@ -303,32 +349,14 @@
         const nickname = document.getElementById("nickname").value.trim();
         const password = document.getElementById("password").value.trim();
         const birth = document.getElementById("birth").value.trim();
-        const errorMessageDiv = document.getElementById("errorMessage");
-        const successMessageDiv = document.getElementById("successMessage");
-
-        // 클라이언트 측 유효성 검사
-        if (!id || !nickname || !password || !birth) {
-            showError("모든 필드를 입력해주세요.");
-            return;
-        }
-
-        if (password !== document.getElementById("passwordCheck").value.trim()) {
-            showError("비밀번호가 일치하지 않습니다.");
-            return;
-        }
 
         if (selectedGenres.length !== 3) {
-            showError("선호 장르는 정확히 3개를 선택해야 합니다.");
+            alert("선호 장르는 정확히 3개를 선택해야 합니다.");
             return;
         }
 
         const dto = {
-            user: { // 서버가 기대하는 구조로 변경
-                id,
-                nickname,
-                password,
-                birth
-            },
+            user: { id, nickname, password, birth },
             genreIdxList: selectedGenres
         };
 
@@ -344,33 +372,14 @@
                 return response.text();
             })
             .then(result => {
-                showSuccess(result);
-                // 회원가입 성공 시 리디렉션 (예: 로그인 페이지)
-                setTimeout(() => {
-                    window.location.href = "/auth/login"; // 원하는 URL로 변경
-                }, 2000); // 2초 후 이동
+                alert("회원가입 성공: " + result);
+                window.location.href = "/auth/login";
             })
             .catch(error => {
-                console.error("Error:", error);
-                showError(error.message || "회원가입 중 오류가 발생했습니다.");
+                alert("회원가입 실패: " + error.message);
             });
     };
 
-    const showError = (message) => {
-        const errorMessageDiv = document.getElementById("errorMessage");
-        const successMessageDiv = document.getElementById("successMessage");
-        errorMessageDiv.innerText = message;
-        successMessageDiv.innerText = "";
-    };
-
-    const showSuccess = (message) => {
-        const errorMessageDiv = document.getElementById("errorMessage");
-        const successMessageDiv = document.getElementById("successMessage");
-        successMessageDiv.innerText = message;
-        errorMessageDiv.innerText = "";
-    };
-
-    // 폼 제출 이벤트 리스너 추가
     document.getElementById('joinForm').addEventListener('submit', requestJoin);
 </script>
 </body>

@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class UserGenreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idx", nullable = false, unique = true)
     private Long idx;
 
     @ManyToOne

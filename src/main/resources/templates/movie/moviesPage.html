@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Movies</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 한 줄에 5개 */
+            gap: 20px; /* 포스터 간격 */
+            margin-top: 20px;
+        }
+
+        .movie-item {
+            position: relative;
+            text-align: center;
+        }
+
+        .movie-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movie-item span {
+            margin-top: 10px;
+            display: block;
+            font-size: 14px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<!-- 헤더 포함 -->
+<!-- ~{main/header}는 resources/templates/main/header.html을 참조하는 경로입니다. -->
+<div th:replace="~{main/header}"></div>
+
+<div class="container">
+    <h1>추천 영화</h1>
+    <div class="movie-grid">
+        <div class="movie-item" th:each="movie : ${dto}">
+            <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${movie.poster}}" alt="Poster">
+            <span th:text="${movie.movieName}"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

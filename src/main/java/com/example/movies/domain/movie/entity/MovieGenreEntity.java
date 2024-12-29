@@ -14,17 +14,14 @@ public class MovieGenreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx", nullable = false , unique = true)
     private Long idx;
 
-    // Setter for movieEntity (양방향 관계 관리용)
-    @Setter
     @ManyToOne
     @JoinColumn(name = "movie_idx", referencedColumnName = "idx", nullable = false)
-    private MovieEntity movieEntity;
+    private MovieEntity movie;
 
     @ManyToOne
     @JoinColumn(name = "genre_idx", referencedColumnName = "idx", nullable = false)
-    private GenreEntity genreEntity;
+    private GenreEntity genre;
 
 }
