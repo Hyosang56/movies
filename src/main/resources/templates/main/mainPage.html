@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style></style>
+    <title>main</title>
+    <link
+        rel="stylesheet" hred="/css/main/main.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="header" style="display: flex; flex-direction: row">
+            <div class="logo"> <img style="width: 350px;" src="/img/movies_logo.png" alt="로고"></div>
+            <div class="loginjoin">
+                <span>로그인</span>
+                <span style="margin-left: 20px;">회원가입</span>
+                <span>영화순위</span>
+                <ul class="movieRankList" >
+                    <li class="movieRank" th:each="dto : ${dto.movieRankAndTitleList}"  >
+                        <span th:text="${dto.rank}"></span>
+                        <span th:text="${dto.movieName}"></span>
+                        <img th:src="@{'https://image.tmdb.org/t/p/w500' + ${dto.posterPath}}" alt="Poster" width="200" height="300">
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div>d</div>
+    </div>
+</body>
+</html>
